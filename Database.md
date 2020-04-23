@@ -26,7 +26,7 @@
         
         }
 
-## Docker & PostgreSQL
+- Docker & PostgreSQL
 
     Here we will use it to create isolated environments (container).
 
@@ -79,7 +79,7 @@
 
                 ![Database/Screen_Shot_2020-04-19_at_21.33.24.png](Database/Screen_Shot_2020-04-19_at_21.33.24.png)
 
-## TypeORM & PostgreSQL
+- TypeORM & PostgreSQL
 
     TypeORM is an ORM: Object Relational Mapping that can run in NodeJS, Browser, Cordova, PhoneGap, Ionic, React Native, NativeScript, Expo, and Electron platforms and can be used with TypeScript and JavaScript (ES5, ES6, ES7, ES8). Its goal is to always support the latest JavaScript features and provide additional features that help you to develop any kind of application that uses databases - from small applications with a few tables to large scale enterprise applications with multiple databases.
 
@@ -115,7 +115,7 @@
 
     8. Testing: `yarn dev: server` Super! Our connection with database is done ;)
 
-## Creating a table
+- Creating a table
 
     Here we will work with "migrations" concept, like the github for our database, it manage the db versions of the project so that everyone is working in the same version
 
@@ -188,7 +188,7 @@
     11. To undo the migration just sent: `yarn typeorm migration:revert`
     12. See executed migrations: `yarn typeorm migration:show` 
 
-## Creating an appointment model
+- Creating an appointment model
     1. models/Appointments.ts `import { Entity } from 'typeorm';` // Something that will the save in db
     2. `tsconfig.json` uncomment no enable decorator @ : 
         1. "experimentalDecorators": true, /* Enables experimental support for ES7 decorators. */
@@ -219,7 +219,7 @@
             
             export default Appointment;
 
-## TypeORM Repository (db operations with TypeORM)
+- TypeORM Repository (db operations with TypeORM)
 
     TypeORM has its own repository with its own operations (save/ deletes,...). 
 
@@ -327,8 +327,7 @@
     12. So... what was all that? Recapitulating! 
         1. We created a repository: @EntityRepository on our AppointmentsRepository.ts file  > we converted the data search using SQL (query where: {data} )
         2. We changed our CreateAppointmentService.ts to use it whith the new repository
-
-## Model & users migration
+- Model & users migration
     1. Lets start creating the users db: `yarn typeorm migration:create -n CreateUsers` > this will be pretty much like the other table, you can copy the up and down methods, but change the fields for the one proper to a user needs. It's also a good practice to include a column to say when this profile was created and updated
 
             {
@@ -428,7 +427,7 @@
 
     7. **KISS** Keep it simple & Stupid. Programming principle
 
-## Creating new entry
+- Creating new entry
 
     We will create a new route documents, because now we are not adding appointments, but users: src/routes/users.routes.ts > copy all the structure from previous route into this new file>  delete get method (we will use only post) > clean what is not needed and leave it as clean as possible!
 
@@ -572,13 +571,13 @@
             // delete password from db visibility
                 delete user.password;
 
-## JWT Authentication
+- JWT Authentication
 
     JWT Jason Wb Token: authentication in REST API, communicating through json. 
 
     ![Database/Screen_Shot_2020-04-21_at_18.11.46.png](Database/Screen_Shot_2020-04-21_at_18.11.46.png)
 
-   ### Validate user credentials
+    - Validate user credentials
         1. Lets start creating another route called src/routes/`sessions.routes.ts` > copying into it another route structure > cleaning it to basic structure: 
 
                 import { Router } from 'express';
@@ -680,7 +679,7 @@
                 
                 export default sessionsRouter;
 
-   ### Generating JWT Token
+    - Generating JWT Token
         1. add package `yarn add jsonwebtoken` > and its type in dev env: `yarn add -D @types/jsonwebtoken`
         2. Now we will add this token into our AuthenticateUserService.ts using { sign } method from jsonwebtoken we just added. Sign is like the user signature, it is a payload (1st parameter) + a secret key (2nd parameter) + parameters as 3rd parameter. It takes user's info that I can use, NEVER secure info, not even email. 
             1. 1st parameter =  uses not sensitive info, but ones used in frontend ex: user permissions. 
@@ -692,13 +691,13 @@
 
             ![Database/Screen_Shot_2020-04-21_at_23.02.53.png](Database/Screen_Shot_2020-04-21_at_23.02.53.png)
 
-  ## Authenticated route: creating authentication middleware
+    - Authenticated route: creating authentication middleware
 
         What does it do? It doesn't allow that unauthenticated users to be able to access some applications part. 
 
         How?
 
-       ### Setting up Insomnia
+        - Setting up Insomnia
 
             On Get/ header we add: Authorization, and add as a value: Barer + token. Insomnia has a Auth field, that allows to do the same: 
 
@@ -726,7 +725,7 @@
 
             Insert token also in the route: appointments/ Create as well :)
 
-        ### Creating middleware
+        - Creating middleware
             1. Create src/middlewares/ensureAuthenticated.ts > insert basic middleware structure: 
 
                     import { Request, Response, NextFunction } from 'express';
@@ -901,7 +900,7 @@
               }
             }
 
-    ### Redefining libraries @types (typescript types)
+    - Redefining libraries @types (typescript types)
 
         When I need to use a type as a method from an imported library that does not exists as default we can "hack the system" by creating a file inside of our src/ that adds this type
 
@@ -919,7 +918,7 @@
 
             ![Database/Screen_Shot_2020-04-22_at_12.55.03.png](Database/Screen_Shot_2020-04-22_at_12.55.03.png)
 
-## Image uploads
+- Image uploads
 
     Leta add Avatars \o
 
@@ -1015,7 +1014,7 @@
 
         ![Database/Screen_Shot_2020-04-22_at_15.55.35.png](Database/Screen_Shot_2020-04-22_at_15.55.35.png)
 
-## Updating avatar: saving the image
+- Updating avatar: saving the image
     1. Create a service to set business rules for avatar upload (delete previous, if is new, validating user, etc): `src/services/UpdateUserAvatarService.ts` > create default structure: 
 
             class UpdateUserAvatarService {}
@@ -1110,7 +1109,7 @@
                 }
             },
 
-## Serving static files (create route to see avatar)
+- Serving static files (create route to see avatar)
     1. on src/server.ts add file route let's add this route to make it possible to have a route to see the users avatars: 
 
             import 'reflect-metadata';
@@ -1139,8 +1138,8 @@
 
         ![Database/Screen_Shot_2020-04-22_at_18.02.20.png](Database/Screen_Shot_2020-04-22_at_18.02.20.png)
 
-## Exception handling (dealing with errors)
-   ### Creating error class
+- Exception handling (dealing with errors)
+    - Creating error class
 
         Why? To be able understand where this error was originated within our route standard fluxos (request/ response and errors in between)
 
@@ -1181,7 +1180,7 @@
                   return response.status(err.statusCode).json({ error: err.message });
 
         5. This could be changes in all the routes, but following you will see how to create a global variable for it
-    ### Dealing with errors: Global exception handler
+    - Dealing with errors: Global exception handler
 
         It is a middleware that captures all of our application errors to be able to manipulate it.
 
