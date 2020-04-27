@@ -71,6 +71,7 @@ class ImportTransactionsService {
 
     const finalCategories = [...newCategories, ...existentCategories];
 
+    // for each transaction it returns an object
     const createdTransactions = transactionRepository.create(
       transactions.map(transaction => ({
         title: transaction.title,
@@ -85,6 +86,8 @@ class ImportTransactionsService {
     await transactionRepository.save(createdTransactions);
 
     await fs.promises.unlink(filePath);
+
+    return createdTransactions;
   }
 }
 
