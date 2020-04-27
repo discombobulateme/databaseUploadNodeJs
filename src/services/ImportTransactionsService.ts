@@ -37,7 +37,7 @@ class ImportTransactionsService {
       );
 
       // I'll have info on my csv file when I have all those infos
-      if (!title || !type || value) return;
+      if (!title || !type || !value) return;
 
       // book & search: save in db once instead of opening and closing for every single one
       categories.push(category);
